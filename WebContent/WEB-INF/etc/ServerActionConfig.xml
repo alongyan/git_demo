@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="GBK"?>
+<config>
+	<!-- 配置全局属性 -->
+	<properties>
+        <property name="messageCoder" value="com.amarsoft.server.coder.JSONMessageCoder"/>
+	</properties>
+	<!-- 配置错误编码 -->
+	<errors>
+		<!--id为错误代码编号，
+			type为错误级别（	system：系统级别，每个交易系统进行检查，不需要在action中进行配置
+							success：成功级别，不需要配置
+							error：业务级别，需要在action中进行配置）
+		 -->
+		<error id="0100" type="system" describute="报文格式不正确" />
+		<error id="0101" type="system" describute="系统无此交易类型" />
+		<error id="0102" type="system" describute="报文缺少要素" />
+		<error id="0103" type="system" describute="报文字段长度校验" />
+		<error id="0104" type="system" describute="报文必输项检查" />
+		<error id="0105" type="system" describute="不支持该渠道进行此交易" />
+		<error id="0106" type="system" describute="数据非法" />
+		<error id="0000" type="success" describute="SUCCESS" />
+		<error id="9999" type="fail" describute="ERROR" />
+		<error id="0001" type="error" describute="MD5加密不过关" />
+		<error id="0002" type="error" describute="缺少参数" />
+		<error id="0003" type="error" describute="必输项检查" />
+		<error id="0004" type="error" describute="解密失败" />
+		<error id="0005" type="error" describute="数据非法" />
+		<error id="1002" type="error" describute="零售渠道存在相同項目編號" />
+		<error id="1003" type="error" describute="零售渠道签名验证检查失败" />
+		<error id="1004" type="error" describute="零售渠道字段数据转换发生异常" />
+		<error id="1005" type="error" describute="零售渠道么么贷年龄小于20岁或大于50岁" />
+		<error id="1006" type="error" describute="零售渠道么么贷同一人在么么贷有多笔未结清，金额之和不能大于2万" />
+		<error id="1007" type="error" describute="零售渠道么么贷期限不可大于12期" />
+		<error id="1010" type="error" describute="零售渠道买单侠年龄必須滿18岁" />
+		<error id="1011" type="error" describute="零售渠道买单侠客户单笔金额上限为3000" />
+		<error id="1012" type="error" describute="零售渠道买单侠期限上限12期" />
+		<error id="1021" type="error" describute="零售渠道淘金家客户单笔金额上限为60万" />
+		<error id="1022" type="error" describute="零售渠道淘金家期限上限6期" />
+		
+		<error id="1400" type="error" describute="该笔业务已存在,请勿重复推送" />
+		<error id="1405" type="error" describute="申请Tikets验证不通过" />
+		<error id="1406" type="error" describute="申请Tikets验证不通过" />
+		<error id="1410" type="error" describute="JMID不存在" />
+		<error id="1411" type="error" describute="字段超长"/>
+		<error id="1412" type="error" describute="值类型不正确"/>
+		<error id="1413" type="error" describute="条件项缺少"/>
+		<error id="1414" type="error" describute="图片下载Url不可用"/>
+		<error id="1415" type="error" describute="下拉字典不符合规范"/>
+		<error id="1416" type="error" describute="传入参数不存在"/>
+		<error id="1417" type="error" describute="不存在使用该手机号的用户"/>
+		<error id="1418" type="error" describute="该用户不是门店员工"/>
+		<error id="1419" type="error" describute="系统中没有该门店下的店员"/>
+		<error id="1420" type="error" describute="传入信息有误，请核实"/>
+		<error id="1416" type="error" describute="CodeNo不存在"/>
+		<error id="1420" type="error" describute="不存在用户ID"/>
+	</errors>
+	<!-- 专门向积木时代提供 系统交易检查报文  开始   检查顺序从上到下-->
+	<systemchecks>
+		<check id="SystemCheckTranId" className="com.amarsoft.server.check.SystemCheckTranId" errorCode="0101"></check>
+		<check id="SystemCheckTranLabel" className="com.amarsoft.server.check.SystemCheckTranLabel" errorCode="0102"></check>
+		<check id="SystemCheckLengthAndType" className="com.amarsoft.server.check.SystemCheckLengthAndType" errorCode="0103"></check>
+		<check id="SystemCheckRequiredValue" className="com.amarsoft.server.check.SystemCheckRequiredValue" errorCode="0104"></check>
+		<check id="SystemCheckChannel" className="com.amarsoft.server.check.SystemCheckChannel" errorCode="0105"></check>
+		<check id="SystemCheckEnumValue" className="com.amarsoft.server.check.SystemCheckEnumValue" errorCode="0106"></check>	
+	</systemchecks>
+	<!-- 业务交易检查报文 开始 -->
+	<errorchecks>
+		<check id="CheckTranLabel" className="com.amarsoft.server.check.ErrorCheckTranLabel" errorCode="0002"></check>
+		<check id="CheckRequiredValue" className="com.amarsoft.server.check.ErrorCheckRequiredValue" errorCode="0003"></check>
+		<check id="CheckEnumValue" className="com.amarsoft.server.check.ErrorCheckEnumValue" errorCode="0005"></check>
+		
+		<check id="CheckMD5" className="com.amarsoft.server.check.ErrorCheckMD5" errorCode="0001"></check>
+		<check id="CheckMD5ForIN" className="com.amarsoft.server.check.ErrorCheckMD5ForIN" errorCode="0001"></check>
+		<check id="CheckDES" className="com.amarsoft.server.check.ErrorCheckDES" errorCode="0004"></check>
+		<check id="CheckMD5For76" className="com.amarsoft.server.check.ErrorCheckMD5For76" errorCode="0004"></check>
+		<check id="CheckMMDProjectNo" className="com.amarsoft.server.check.ErrorCheckMMDProjectNo" errorCode="1002"></check>
+		<check id="CheckMD5ForMMD" className="com.amarsoft.server.check.ErrorCheckMD5ForMMD" errorCode="1003"></check>
+		<!-- 這個一定要在校驗加密的check類之後，因為會替換請求的數據 -->
+		<check id="CheckMappingValue" className="com.amarsoft.server.check.ErrorCheckMappingValue" errorCode="1004"></check>
+		<check id="CheckMMDAge" className="com.amarsoft.server.check.ErrorCheckMMDAge" errorCode="1005"></check>
+		<check id="CheckMMDBusinessSum" className="com.amarsoft.server.check.ErrorCheckMMDBusinessSum" errorCode="1006"></check>
+		<check id="CheckMMDTermMonth" className="com.amarsoft.server.check.ErrorCheckMMDTermMonth" errorCode="1007"></check>
+		<check id="CheckMDXAge" className="com.amarsoft.server.check.ErrorCheckMDXAge" errorCode="1010"></check>
+		<check id="CheckMDXBusinessSum" className="com.amarsoft.server.check.ErrorCheckMDXBusinessSum" errorCode="1011"></check>
+		<check id="CheckMDXTermMonth" className="com.amarsoft.server.check.ErrorCheckMDXTermMonth" errorCode="1012"></check>
+		<check id="CheckTJJBusinessSum" className="com.amarsoft.server.check.ErrorCheckTJJBusinessSum" errorCode="1021"></check>
+		<check id="CheckTJJTermMonth" className="com.amarsoft.server.check.ErrorCheckTJJTermMonth" errorCode="1022"></check>
+		
+		<!-- 用于对零售系统验证 -->
+		<check id="CheckSRRequiredValue" className="com.amarsoft.server.check.ErrorCheckSRRequiredValue" errorCode="0003"></check>
+		<check id="checkSRSelectValue" className="com.amarsoft.server.check.ErrorCheckSRSelectValue" errorCode="1415"></check>
+		<check id="CheckProjectNo" className="com.amarsoft.server.check.ErrorCheckProjectNo" errorCode="1400"></check>
+		<check id="CheckTikets" className="com.amarsoft.server.check.ErrorCheckTikets" errorCode="1405"></check>
+		<check id="CheckCodeNoIsExist" className="com.amarsoft.server.check.CheckCodeNoIsExist" errorCode="1416"></check>
+		<check id="CheckUserIDExist" className="com.amarsoft.server.check.CheckUserIDExist" errorCode="1416"></check>
+		<check id="CheckMerchantsNoExist" className="com.amarsoft.server.check.CheckMerchantsNoExist" errorCode="1416"></check>
+		<check id="CheckTypeNoExist" className="com.amarsoft.server.check.CheckTypeNoExist" errorCode="1416"></check>
+		<check id="CheckTiketsForItemStatus" className="com.amarsoft.server.check.ErrorCheckTiketsForItemStatus" errorCode="1406"></check>
+		<check id="CheckJMID" className="com.amarsoft.server.check.ErrorCheckJMID" errorCode="1410"></check>
+		<check id="CheckSRTextLength" className="com.amarsoft.server.check.ErrorCheckSRTextLength" errorCode="1411"></check>
+		<check id="CheckSRItemType" className="com.amarsoft.server.check.ErrorCheckSRItemType" errorCode="1412"></check>
+		<check id="CheckSRForSpecial" className="com.amarsoft.server.check.ErrorCheckSRForSpecial" errorCode="1413"></check>
+		<check id="CheckUrlAvailable" className="com.amarsoft.server.check.ErrorCheckUrlAvailable" errorCode="1414"></check>
+		
+		
+		<!-- CJ服务 -->
+		<check id="CheckIsExist" className="com.amarsoft.server.check.ErrorCheckUserIsExist" errorCode="1417"></check>
+		<check id="CheckIsSA" className="com.amarsoft.server.check.ErrorCheckIsSA" errorCode="1418"></check>
+		<check id="CheckHaveUserID" className="com.amarsoft.server.check.ErrorCheckHaveUserID" errorCode="1419"></check>
+		<check id="CheckErrorContract" className="com.amarsoft.server.check.ErrorCheckContract" errorCode="1420"></check>
+		<check id="CheckContract" className="com.amarsoft.server.check.ErrorCheckContractList" errorCode="1420"></check>
+		<!-- yhwang -->
+		<check id="CheckUserStatus" className="com.amarsoft.server.check.ErrorCheckUserStatus" errorCode="1420"></check>
+		
+	</errorchecks>
+	<!-- 业务交易检查报文 结束 -->
+	<!-- 配置交易类型的信息 -->
+	<actions>
+		<!-- 禅融渠道系统交易完成 -->
+		<action id="SR001" path="/SR/lr/checkbusiness" className="com.amarsoft.server.action.TranseSRMessage" checkList="CheckSRItemType,CheckSRRequiredValue,checkSRSelectValue,CheckTikets,CheckProjectNo,CheckSRTextLength,CheckSRForSpecial,CheckUrlAvailable" request="requestSR001" response="responseSR001"></action>
+		<!-- 获取业务状态 -->
+		<action id="BS001" path="/DW/sv/businessstatus" className="com.amarsoft.server.action.TranseBusinessStatus" checkList="CheckTiketsForItemStatus,CheckJMID" request="requestBS001" response="responseBS001"></action>
+		
+		<!--1.获取用户状态 -->
+		<action id="CJ001" path="/CJ/US/userStatus" className="com.amarsoft.server.action.TranseUserStatus" checkList="" request="requestUS001" response="responseUS001"></action>
+		<!--2.查询产品列表 -->
+		<action id="BT001" path="/CJ/BT/BusinessType" className="com.amarsoft.server.action.TranseBusinessType" checkList="" request="requestBT001" response="responseBT001"></action>
+		<!--3.查询商品分类  -->
+		<action id="BS001" path="/CJ/BS/BusinessSort" className="com.amarsoft.server.action.TranseBusinessSort" checkList="CheckTikets,CheckTypeNoExist" request="requestBS001" response="responseBS001"></action>
+		<!--4.查询字典数据  -->
+		<action id="CL001" path="/CJ/CL/CodeLibrary" className="com.amarsoft.server.action.TranseCodeLibrary" checkList="CheckTikets,CheckCodeNoIsExist" request="requestCL001" response="responseCL001"></action>
+		<!--5.贷款申请提交  -->
+		<action id="BA001" path="/CJ/BA/BusinessApply" className="com.amarsoft.server.action.TranseBusinessApply" checkList="CheckTikets" request="requestBA001" response="responseBA001"></action>
+		<!--6.上传放款凭证  -->
+		<action id="TB001" path="/CJ/TB/TransferBusiness" className="com.amarsoft.server.action.TranseTransferBusiness" checkList="" request="requestTB001" response="responseTB001"></action>
+		<!--7.申请提前还款 -->
+		<action id="AR001" path="/CJ/AR/AdvanceRefund" className="com.amarsoft.server.action.TranseAdvanceRefund" checkList="CheckTikets,CheckContract" request="requestAR001" response="responseAR001"></action>
+		<!--8.根据订单号查询订单 -->
+		<action id="CS001" path="/CJ/CS/CheckSerialNo" className="com.amarsoft.server.action.TranseCheckSerialNo" checkList="CheckTikets" request="requestCS001" response="responseCS001"></action>
+		<!--9.根据sa或店员工号及业务状态返回订单列表 -->
+		<action id="SI001" path="/CJ/SI/SelectInfo" className="com.amarsoft.server.action.TranseSelectInfo" checkList="CheckTikets" request="requestSI001" response="responseSI001"></action>
+		<!--10.根据SA工号返回门店列表 -->
+		<action id="SM001" path="/CJ/SM/SelectMerchants" className="com.amarsoft.server.action.TranseSelectMerchants" checkList="CheckTikets,CheckUserIDExist" request="requestSM001" response="responseSM001"></action>
+		<!--11.根据门店编号返回SA列表 -->
+		<action id="SA001" path="/CJ/SA/SelectSA" className="com.amarsoft.server.action.TranseSelectSA" checkList="CheckTikets,CheckMerchantsNoExist" request="requestSA001" response="responseSA001"></action>
+		<!--12.根据店员工号返回门店编号 -->
+		<action id="MA001" path="/CJ/MA/BelongMerchant" className="com.amarsoft.server.action.TranseBelongMerchant" checkList="CheckTikets,CheckIsSA" request="requestMA001" response="responseMA001"></action>
+		<!--13.根据门店编号返回店员列表 -->
+		<action id="UI001" path="/CJ/UI/UserID" className="com.amarsoft.server.action.TranseUserID" checkList="CheckTikets,CheckHaveUserID" request="requestUI001" response="responseUI001"></action>
+		<!--14.根据手机号判断是否sa或店员 -->
+		<action id="YN001" path="/CJ/YN/YesNoSA" className="com.amarsoft.server.action.TranseYesNoSA" checkList="CheckTikets,CheckIsExist" request="requestYN001" response="responseYN001"></action>
+		<!--15.获取打款状态 -->
+		<action id="CF001" path="/CJ/CF/ContractFlag" className="com.amarsoft.server.action.TranseContractFlag" checkList="CheckTikets,CheckErrorContract" request="requestCF001" response="responseCF001"></action>
+		 
+	</actions>
+	<!-- 配置渠道可进行的交易类型 -->
+	<channels>
+		<channel id="JMTIME" actionItems="JM004,JM003,JM002,JM001" describute="积木时代" dd="44"/>
+	</channels>
+</config>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMLmessagess>
+	<!--
+		1.parentElement为空则为root节点 <Element parentElement="" resource=""
+		resourceType="" path="" nodeid="0" >Request</Element>
+		2.path不为空并且resourceType 不为空 直接创建子节点挂到执行路径下下 <Element
+		parentElement="colts" path="/Request/*" nodeid="3" resource="SELECT
+		Guarantyid,GuarantyType,GuarantyStatus,Ownerid,OwnerName,Rate,Subjectno
+		FROM guaranty_info where " resourceType="db" >clot</Element>
+		3.nodeid是该层节点的唯一标示
+		 4.resourceType元素为空并且 元素内容不为空直接穿件并挂到指定的路径上 <Element
+		parentElement="Request" resource="" resourceType="" path="" nodeid="2"
+		>colts</Element>
+		 5.如果节点名称为空则不创建该便签，直接按路径在指定的路径下创建子元 素 <Element
+		parentElement="Request" resource="SELECT
+		Customerid,Customername,Customertype,Certtype FROM customer_info where
+		" resourceType="db" path="" nodeid="1" ></Element>
+		6.resource如果存在给便签传值按一下规则:nodeid@str1@nodeid@str2
+	-->
+	
+	<!-- 财报信息反馈报文 -->
+	<!-- replay="4" 循环生成标签次数根据 传递的reportmemMap.size()定义-->
+	<!-- replay="3"&&resourceType="db" where 条件根据特定判断生成-->
+	<!-- replay="2" 循环生成标签次数根据 传递的reportsMap.size()定义-->
+	<messageList name='ImageUpload'>
+		<Element parentElement="" resource="" resourceType="" path=""
+			nodeid="0" replay="1">res</Element>
+			
+		<Element parentElement="res" resource="" resourceType=""
+			path="" nodeid="1" replay="0">headers</Element>
+		<Element parentElement="res" resource="" resourceType=""
+		path="" nodeid="2" replay="0">body</Element>
+		 
+		<Element parentElement="body" resource="" resourceType="ndb"
+			path="/res/*" nodeid="3" replay="1"></Element>
+	</messageList>
+
+</XMLmessagess>

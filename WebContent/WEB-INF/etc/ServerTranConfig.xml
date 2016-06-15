@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 循环自助贷交易配置文件，支持渠道
+ATM	ATM终端
+EBANK	网银
+TELLER	柜面
+
+ -->
+<trans tranlabel="Code">
+	<properties>
+		<property name="TranID" value="TradCode" describe="交易号标签名称"/>
+		<property name="ResponseCode" value="State" describe="返回报文中的状态代码"/>
+		<property name="ResponseDescribe" value="Message" describe="返回报文中的状态描述"/>
+		<property name="Channel" value="Channel" describe="渠道标签"/>
+		
+	</properties>
+	<!-- 固定部分，不能修改 -->
+	<tran id="INCommonRequest" describe="IN系统公共请求报文部分">
+		<filed name="SPID" type="String" defaultValue="" length="10" require="Y" describe="签约帐账号"/>
+		<filed name="StartTime" type="String" defaultValue="" length="10" require="Y" describe="签约帐账号"/>
+		<filed name="EndTime" type="String" defaultValue="" length="10" require="Y" describe="签约帐账号"/>
+		<filed name="Token" type="String" defaultValue="" length="10" require="Y" describe="签约帐账号"/>
+	</tran>
+	
+	<tran id="INCommonResponse" describe="IN系统公共返回报文部分">
+		<filed name="Code" type="String" defaultValue="" length="4" require="Y" describe="返回代码"/>
+		<filed name="Describe" type="String" defaultValue="" length="100" require="Y" describe="代码描述"/>
+	</tran>
+	
+	<!-- type: 单属性标识：String, Double, Integer  
+				多属性标志：Map： 子标签为多个不重复标签，用于一条记录多个字段，多条记录
+				 			List：子标签为单一重复标签，用于一条记录一个字段，多条记录
+	-->
+	<!-- in 系统测试-->
+	<tran id="requestEDuBalance" describe="额度账户余额查询请求" extend="INCommonRequest">
+		
+	</tran>
+	<tran id="responseEDuBalance" describe="额度账户余额查询响应">
+		
+	</tran>
+	<tran id="requestIN100" describe="买单侠" extend="INCommonRequest">
+		<filed name="AgentOrg" type="String" defaultValue="" length="10" require="Y" describe="" enumValue="MDX" />
+	</tran>
+	<tran id="responseIN100" describe="">
+		
+	</tran>
+	<tran id="requestIN101" describe="么么贷" extend="INCommonRequest">
+		<filed name="AgentOrg" type="String" defaultValue="" length="10" require="Y" describe="" enumValue="MMD" />
+	</tran>
+	<tran id="responseIN101" describe="么么贷">
+		
+	</tran>
+	<tran id="requestIN102" describe="积木时代，淘金家 " extend="INCommonRequest">
+		<filed name="AgentOrg" type="String" defaultValue="" length="10" require="Y" describe="" enumValue="TJJ,JMSD,DIANXIAO,R360,JMSDQIJIAO" />
+	</tran>
+	<tran id="responseIN102" describe="积木时代，淘金家 ">
+		
+	</tran>
+<!-- add by xlsun date 2015-09-14 -->
+	<tran id="requestIN103" describe="积木时代-禅融 " extend="INCommonRequest">
+		<filed name="AgentOrg" type="String" defaultValue="" length="10" require="Y" describe="" enumValue="SP,JMSDZHIXIAO" />
+	</tran>
+	<tran id="responseIN103" describe="积木时代-禅融 ">
+	</tran>
+	<!-- add by xlsun 禅融系统 -->
+	<tran id="requestSR001" describe="禅融系统">
+		<!-- 融资信息模块 -->
+		<filed name="ProjectNo" type="String" style="Text" defaultValue="" length="40" require="Y" describe="业务编号" enumValue="融薪贷" />
+		<filed name="OrgID" type="String" style="Text" defaultValue="" length="40" require="Y" describe="系统机构号" enumValue="融薪贷" />
+		<filed name="Type" type="String" style="Text" defaultValue="" length="50" require="Y" describe="产品类型" enumValue="融薪贷" />
+		<filed name="FinancingAmount" type="Double" style="Text" defaultValue="" length="80" require="Y" describe="融资金额"  />
+		<filed name="TermMonth" type="String" style="Select"  defaultValue="" length="10" require="Y" describe="融资期限" codeNo="Month"/>
+		<filed name="DebtUsage" type="String" style= "Select" defaultValue="" length="100" require="Y" describe="贷款用途" codeNo="Purpose1"/>
+		<filed name="Purpose" type="String" style="Text" defaultValue="" length="200" require="Y" describe="借款用途描述" />
+		<filed name="ApplyCity" type="String"  defaultValue="" style= "SelectItemNo" length="100" require="N" describe="申请贷款城市" codeNo="AreaCode"/>
+		<filed name="CustomerSort" type="String" style="Select"  defaultValue="" length="50" require="N" describe="客群分类" codeNo="CustomerSort" />
+		<filed name="CaleChanel" type="String" style="Select"  defaultValue="" length="50" require="Y" describe="营销渠道" codeNo="SalesCanal"/>
+		<filed name="SaleCarID" type="String" style="Text" defaultValue="" length="60" require="N" describe="营销人员身份证号" />
+		<filed name="SaleName" type="String" style="Text" defaultValue="" length="20" require="N" describe="营销人员姓名" />
+		<!-- 基本信息 -->
+		<filed name="ChineseName" type="String" style="Text" defaultValue="" length="20" require="Y" describe="客户名称" />
+		<filed name="IdentityNumber" type="String" style="Text" defaultValue="" length="20" require="Y" describe="证件号码" />
+		<filed name="Sex" type="String" style="Select"  defaultValue="" length="20" require="Y" describe="性别" codeNo ="Sex"/>
+		<filed name="Birthday" type="String" style="Text" defaultValue="" length="10" require="Y" describe="出生日期" />
+		<filed name="Marriage" type="String" style="Select"  defaultValue="" length="20" require="Y" describe="婚姻状况" codeNo="Marriage" />
+		<filed name="Eduexperience" type="String" style="Select"  defaultValue="" length="10" require="Y" describe="最高学历" codeNo="Educ"/>
+		<filed name="BankName" type="String" defaultValue="" style="Text" length="40" require="Y" describe="开户银行" />
+		<filed name="BankCarID" type="String" defaultValue="" style="Text" length="40" require="Y" describe="提现银行卡号" />
+		<filed name="Familystatus" type="String" style="Select"  defaultValue="" length="40" require="Y" describe="居住状况" codeNo="FamilyState1" />
+		<filed name="Monthrent" type="Double" style="Text" defaultValue="" length="30" require="N" describe="月租金/月" />
+		<filed name="Supportpeopleno" type="Integer" style="Text" defaultValue="" length="10" require="Y" describe="供养人口" />
+		<filed name="Subordinatecar" type="String" style="Select"  defaultValue="" length="10" require="N" describe="是否有所属车辆" codeNo="YesNo"/>
+		<filed name="FamilyAdd" type="String" style="SelectItemNo" defaultValue="" length="100" require="Y" describe="居住地址区县" codeNo="AreaCode"/>
+		<filed name="Familyadddetails" type="String" style="Text" defaultValue="" length="100" require="N" describe="居住地址详细信息" />
+		<filed name="Phone" type="String" style="Text" defaultValue="" length="20" require="Y" describe="手机号码" />
+		<filed name="FamilyTel" type="String" style="Text" defaultValue="" length="18" require="Y" describe="住宅电话" />		
+		<filed name="EmailAdd" type="String" style="Text" defaultValue="" length="100" require="Y" describe="电子邮箱" />
+		<filed name="Qq" type="String" style="Text" defaultValue="" length="20" require="N" describe="QQ" />
+		<filed name="Weixin" type="String" style="Text" defaultValue="" length="20" require="N" describe="微信" />
+		<filed name="Startdate" type="String" style="Text" defaultValue="" length="20" require="N" describe="起始居住时间" />
+		<filed name="CommAdd" type="String" style="Select" defaultValue="" length="40" require="Y" describe="账单邮寄地址" codeNo="MailAddress" />
+		<filed name="OtherAddress" type="String" style="Text" defaultValue="" length="100" require="N" describe="其他地址" />
+		<filed name="Localdate" type="String" style="Text" defaultValue="" length="20" require="N" describe="申请人来本地时间" />
+		<!--工作信息-->
+		<filed name="CompanyName" type="String" style="Text" defaultValue="" length="100" require="Y" describe="工作单位"/>
+		<filed name="CompanyNature" type="String" style="Select"  defaultValue="" length="40" require="Y" describe="单位性质" codeNo="UNITNATURE"/>
+		<filed name="WorkAdd" style="SelectItemNo" type="String" defaultValue="" length="100" require="N" describe="单位地址区县" codeNo="AreaCode"/>
+		<filed name="Workadddetails" type="String" style="Text" defaultValue="" length="100" require="N" describe="单位地址详细信息"/>
+		<filed name="Department" type="String" style="Text" defaultValue="" length="100" require="N" describe="所在部门"/>
+		<filed name="UnitKind" type="String" style="Text" defaultValue="" length="100" require="N" describe="单位所属行业"/>
+		<filed name="HeadShip" type="String" style="Select"  defaultValue="" length="100" require="Y" describe="职级" codeNo="HeadShip"/>
+		<filed name="Position" type="String" style="Text" defaultValue="" length="50" require="Y" describe="职务"/>
+		<filed name="Mainbuziness" type="String" style="Text" defaultValue="" length="200" require="N" describe="主营业务"/>
+		<filed name="CompanyTel" type="String" style="Text" defaultValue="" length="80" require="Y" describe="工作单位座机"/>
+		<filed name="WorkTel1" type="String" style="Text" defaultValue="" length="10" require="N" describe="分机"/>
+		<filed name="WorkBeginDate" type="String" style="Text" defaultValue="" length="40" require="Y" describe="本单位工作起始时间"/>
+		<filed name="Paydayway" type="String" style="Select"  defaultValue="" length="10" require="N" describe="发薪方式" codeNo="PayWay"/>
+		<filed name="Securitytype" type="String" style="Select"  defaultValue="" length="10" require="Y" describe="社保类型" codeNo="SECURITYTYPE"/>
+		<filed name="Selfmonthincome" type="Double" style="Text" defaultValue="" length="30" require="Y" describe="每月薪金"/>
+		<filed name="WorkYears" type="Integer" style="Text" defaultValue="" length="40" require="Y" describe="总工龄"/>
+		<!--add by yhwang 20151123  -->
+		<filed name="PaydayDate" type="String" style="Text" defaultValue="" length="10" require="N" describe="每月发薪日"/>
+		<filed name="LastWorkName" type="String" style="Text" defaultValue="" length="32" require="N" describe="前工作单位名称"/>
+		<filed name="LastStartDate" type="String" style="Text" defaultValue="" length="10" require="N" describe="前工作单位起始时间"/>
+		<filed name="LastPosition" type="String" style="Text" defaultValue="" length="32" require="N" describe="前工作单位职务	"/>
+		<!--房产信息-->
+		<filed name="Housetype" type="String" style="Select"  defaultValue="" length="20" require="N" describe="房产类型" codeNo="FamilyState2"/>
+		<filed name="Housecount" type="Integer" style="Text" defaultValue="" length="18" require="N" describe="房产数量"/>
+		<filed name="Anjxcount1" type="Integer" style="Text" defaultValue="" length="20" require="N" describe="其中按揭数量"/>
+		<filed name="Purchasedate1" type="String" style="Text" defaultValue="" length="50" require="N" describe="购买日期"/>
+		<filed name="Buildprice1" type="Double" style="Text" defaultValue="" length="24" require="N" describe="购买价"/>
+		<filed name="Realtyarea1" type="Double" style="Text" defaultValue="" length="30" require="N" describe="面积"/>
+		<filed name="Realtyadd" type="String" style="Select"  defaultValue="" length="20" require="N" describe="房产同住址" codeNo="Y/N"/>
+		<filed name="Houseaddress" type="String" style="Text" defaultValue="" length="50" require="N" describe="若不同房产地址"/>
+	</tran>
+	<tran id="responseSR001" describe="积木时代-禅融 ">
+	</tran>
+	
+	<!--3.查询商品分类  -->
+	<tran id="requestBS001" describe="查询商品分类 ">
+		<filed name="TypeNo" type="String" defaultValue="" length="32" require="Y" describe="积木ID"/>
+	</tran>
+	<tran id="responseBS001" describe="查询商品分类 ">
+	</tran>
+	
+	<!--6.上传贷款凭证 -->
+	<tran id="requestTB001" describe="上传贷款凭证">
+		<filed name="SerialNo" type="String" defaultValue="" length="40" require="Y" describe="订单号"/>
+		<filed name="Path" type="String" defaultValue="" length="120" require="Y" describe="路径"/>
+	</tran>
+	<tran id="responseTB001" describe="上传贷款凭证 ">
+	</tran>
+	
+	<!--1.用户状态 -->
+	<tran id="requestUS001" describe="用户状态">
+		<filed name="LoginID" type="String" style="Text" defaultValue="" length="32" require="Y" describe="用户ID"/>
+		<filed name="Password" type="String" style="Text" defaultValue="" length="32" require="Y" describe="密码"/>
+	</tran>
+	<tran id="responseUS001" describe="用户状态"></tran>
+	
+	<!-- 4.查询字典数据 -->
+	<tran id="requestCL001" describe="字典数据"></tran>
+		<filed name="CodeNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="字典类型枚举值"/>
+	<tran id="responseCL001" describe="字典数据"></tran>
+	
+	<!-- 10.根据SA工号返回门店列表  -->
+	<tran id="requestSM001" describe="根据SA工号返回门店列表 "></tran>
+		<filed name="ApplySA" type="String" style="Text" defaultValue="" length="32" require="Y" describe="SA工号"/>
+	<tran id="responseSM001" describe="根据SA工号返回门店列表 "></tran>
+	
+	<!-- 11.根据门店编号返回SA列表  -->
+	<tran id="requestSA001" describe="根据门店编号返回SA列表 "></tran>
+		<filed name="MerchantsNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="SA工号"/>
+	<tran id="responseSA001" describe="根据门店编号返回SA列表 "></tran>
+	
+	
+	<tran id="requestBT001" describe="产品列表"></tran>
+	<tran id="responseBT001" describe="产品列表"></tran>
+	
+	<!--7.根据订单号查询订单 -->
+	<tran id="requestCS001" describe="查询订单">
+		<filed name="SerialNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="订单号"/>
+	</tran>
+	<tran id="responseCS001" describe="查询订单"></tran>
+	
+	<!--8.根据sa或店员工号及业务状态返回订单列表 -->
+	<tran id="requestSI001" describe="查询订单">
+		<filed name="BusinessType" type="String" style="Text" defaultValue="" length="32" require="Y" describe="品种"/>
+	</tran>
+	<tran id="responseSI001" describe="查询订单"></tran>
+	
+	<!-- 12.根据店员工号返回门店编号 -->
+	<tran id="requestMA001" describe="查询订单">
+		<filed name="UserID" type="String" style="Text" defaultValue="" length="32" require="Y" describe="店员工号"/>
+	</tran>
+	<tran id="responseMA001" describe="门店编号"></tran>
+	<!-- 13.根据门店编号返回店员列表 -->
+	<tran id="requestUI001" describe="店员列表">
+		<filed name="MerchantsNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="门店"/>
+	</tran>
+	<tran id="responseUI001" describe="店员列表"></tran>
+	<!-- 14.根据手机号判断是否sa或店员 -->
+	<tran id="requestYN001" describe="是否SA">
+		<filed name="CompanyTel" type="String" style="Text" defaultValue="" length="32" require="Y" describe="手机号码"/>
+	</tran>
+	<tran id="responseYN001" describe="是否SA"></tran>
+	
+	
+	<tran id="requestCF001" describe="打款状态">
+		<filed name="SerialNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="流水号"/>
+		<filed name="CertID" type="String" style="Text" defaultValue="" length="32" require="Y" describe="证件号码"/>
+	</tran>
+	<tran id="responseCF001" describe="打款状态"></tran>
+	
+	<tran id="requestAR001" describe="提前还款">
+		<filed name="SerialNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="流水号"/>
+		<filed name="CertID" type="String" style="Text" defaultValue="" length="32" require="Y" describe="证件号码"/>
+		<filed name="CustomerName" type="String" style="Text" defaultValue="" length="32" require="Y" describe="客户名称"/>
+	</tran>
+	<tran id="responseAR001" describe="提前还款"></tran>
+	
+	
+	<tran id="requestBA001" describe="贷款申请">
+		<filed name="BusinessTypeName" type="String" style="Text" defaultValue="" length="32" require="Y" describe="产品名称"/>
+		<filed name="FirstPaySum" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="首付金额"/>
+		<filed name="FirstPayPercent" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="首付比例"/>
+		<filed name="BusinessSum" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="贷款本金"/>
+		<filed name="CreditNum" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="分期期数"/>
+		<filed name="CustomerID " type="String" style="Text" defaultValue="" length="32" require="Y" describe="客户编号"/>
+		<filed name="CustomerName" type="String" style="Text" defaultValue="" length="32" require="Y" describe="客户名称"/>
+		<filed name="RepaySumPermonth" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="每月还款额"/>
+		<filed name="RepayDatePermonth" type="String" style="Text" defaultValue="" length="32" require="Y" describe="每月还款日"/>
+		<filed name="IsInsure" type="String" style="Text" defaultValue="" length="32" require="Y" describe="是否投保"/>
+		<filed name="RepayMode" type="String" style="Text" defaultValue="" length="32" require="Y" describe="还款方式"/>
+		<filed name="LoanAccountNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="代扣/放款账号"/>
+		<filed name="ShopNumber" type="String" style="Text" defaultValue="" length="32" require="Y" describe="门店编号"/>
+		<filed name="SaleShop" type="String" style="Text" defaultValue="" length="32" require="Y" describe="销售门店"/>
+		<filed name="SalePerson" type="String" style="Text" defaultValue="" length="32" require="Y" describe="销售代表"/>
+		<filed name="SaleManager" type="String" style="Text" defaultValue="" length="32" require="Y" describe="销售经理"/>
+		<filed name="SalesMan" type="String" style="Text" defaultValue="" length="32" require="Y" describe="零售商促销员"/>
+		<filed name="SalesManPhoneno" type="String" style="Text" defaultValue="" length="32" require="Y" describe="联系电话"/>
+		<filed name="InputDate" type="String" style="Text" defaultValue="" length="32" require="Y" describe="录单日期"/>
+		<filed name="UpdateDate" type="String" style="Text" defaultValue="" length="32" require="Y" describe="更新日期"/>
+		<filed name="InputUserID" type="String" style="Text" defaultValue="" length="32" require="Y" describe="登记人"/>
+		<filed name="InputOrgID" type="String" style="Text" defaultValue="" length="32" require="Y" describe="登记机构"/>
+		<filed name="GoodsName" type="String" style="Text" defaultValue="" length="32" require="Y" describe="商品名称"/>
+		<filed name="GoodsType" type="String" style="Text" defaultValue="" length="32" require="Y" describe="商品型号"/>
+		<filed name="GoodsPrice" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="商品价格"/>
+		<filed name="GoodsCount" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="商品数量"/>
+		<filed name="GoodsSum" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="商品总额"/>
+		<filed name="CustomerPhoneno" type="String" style="Text" defaultValue="" length="32" require="Y" describe="手机号"/>
+		<filed name="CustomerPassword" type="String" style="Text" defaultValue="" length="32" require="Y" describe="服务密码"/>
+		<filed name="ReservePhoneno" type="String" style="Text" defaultValue="" length="32" require="Y" describe="银行预留手机号"/>
+		<filed name="CertType" type="String" style="Text" defaultValue="" length="32" require="Y" describe="证件类型"/>
+		<filed name="CertID" type="String" style="Text" defaultValue="" length="32" require="Y" describe="身份证号"/>
+		<filed name="BirthDay" type="String" style="Text" defaultValue="" length="32" require="Y" describe="生日"/>
+		<filed name="Sex" type="String" style="Text" defaultValue="" length="32" require="Y" describe="性别"/>
+		<filed name="Identity" type="String" style="Text" defaultValue="" length="32" require="Y" describe="身份"/>
+		<filed name="Residence" type="String" style="Text" defaultValue="" length="32" require="Y" describe="户口性质"/>
+		<filed name="PaybackAccount" type="String" style="Text" defaultValue="" length="32" require="Y" describe="还款账号"/>
+		<filed name="EcomMerceNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="电商号"/>
+		<filed name="CompanyName" type="String" style="Text" defaultValue="" length="32" require="Y" describe="单位名称"/>
+		<filed name="UnitIndustry" type="String" style="Text" defaultValue="" length="32" require="Y" describe="单位行业"/>
+		<filed name="NearbyBuilding1" type="String" style="Text" defaultValue="" length="32" require="Y" describe="附近建筑"/>
+		<filed name="DepartMent" type="String" style="Text" defaultValue="" length="32" require="Y" describe="任职部门"/>
+		<filed name="Job" type="String" style="Text" defaultValue="" length="32" require="Y" describe="职务"/>
+		<filed name="CompanyPhone" type="String" style="Text" defaultValue="" length="32" require="Y" describe="单位电话"/>
+		<filed name="CompanyPhoneSub" type="String" style="Text" defaultValue="" length="32" require="Y" describe="电话分机"/>
+		<filed name="CompanyProperty" type="String" style="Text" defaultValue="" length="32" require="Y" describe="单位性质"/>
+		<filed name="EstablishMentPeriod" type="String" style="Text" defaultValue="" length="32" require="Y" describe="成立年限"/>
+		<filed name="UnitSize" type="String" style="Text" defaultValue="" length="32" require="Y" describe="单位规模"/>
+		<filed name="HaveSocialSecurity" type="String" style="Text" defaultValue="" length="32" require="Y" describe="是否购买了社保"/>
+		<filed name="WorkYear" type="String" style="Text" defaultValue="" length="32" require="Y" describe="本单位工作多久"/>
+		<filed name="WorkLife" type="String" style="Text" defaultValue="" length="32" require="Y" describe="工作年限"/>
+		<filed name="IncomePermonth" type="String" style="Text" defaultValue="" length="32" require="Y" describe="月收入(税前)"/>
+		<filed name="NowaDdress" type="String" style="Text" defaultValue="" length="32" require="Y" describe="现居地址"/>
+		<filed name="NearbyBuilding" type="String" style="Text" defaultValue="" length="32" require="Y" describe="附近建筑"/>
+		<filed name="NowAddressTown" type="String" style="Text" defaultValue="" length="32" require="Y" describe="区县镇（现居）"/>
+		<filed name="NowAddressStreet" type="String" style="Text" defaultValue="" length="32" require="Y" describe="街道/村（现居）"/>
+		<filed name="NowAddressHouse" type="String" style="Text" defaultValue="" length="32" require="Y" describe="小区/楼盘（现居）"/>
+		<filed name="NowAddressRoom" type="String" style="Text" defaultValue="" length="32" require="Y" describe="栋/单元/房间号（现居）"/>
+		<filed name="ResidentAddress" type="String" style="Text" defaultValue="" length="32" require="Y" describe="户籍地址"/>
+		<filed name="ResidentAddress1" type="String" style="Text" defaultValue="" length="32" require="Y" describe="户籍地址详细"/>
+		<filed name="CompanyAddress" type="String" style="Text" defaultValue="" length="32" require="Y" describe="单位地址"/>
+		<filed name="CompanyAddress1" type="String" style="Text" defaultValue="" length="32" require="Y" describe="单位地址详细"/>
+		<filed name="EmailAddress" type="String" style="Text" defaultValue="" length="32" require="Y" describe="账单邮寄地址"/>
+		<filed name="EmailAddress1" type="String" style="Text" defaultValue="" length="32" require="Y" describe="账单邮寄地址详细"/>
+		<filed name="HousingStatus" type="String" style="Text" defaultValue="" length="32" require="Y" describe="住房状况"/>
+		<filed name="LiveYear" type="String" style="Text" defaultValue="" length="32" require="Y" describe="本城市居住多久"/>
+		<filed name="EducationLevel" type="String" style="Text" defaultValue="" length="32" require="Y" describe="教育程度"/>
+		<filed name="EducationType" type="String" style="Text" defaultValue="" length="32" require="Y" describe="教育类型"/>
+		<filed name="GraduationSchool" type="String" style="Text" defaultValue="" length="32" require="Y" describe="毕业院校"/>
+		<filed name="SchoolAddress" type="String" style="Text" defaultValue="" length="32" require="Y" describe="学校地址"/>
+		<filed name="Professional" type="String" style="Text" defaultValue="" length="32" require="Y" describe="专业"/>
+		<filed name="EnrollmentYear" type="String" style="Text" defaultValue="" length="32" require="Y" describe="入学年份"/>
+		<filed name="GraduationYear" type="String" style="Text" defaultValue="" length="32" require="Y" describe="毕业年份"/>
+		<filed name="Email" type="String" style="Text" defaultValue="" length="32" require="Y" describe="电子邮箱"/>
+		<filed name="House" type="String" style="Text" defaultValue="" length="32" require="Y" describe="房产"/>
+		<filed name="HouseAddress" type="String" style="Text" defaultValue="" length="32" require="Y" describe="房产地址"/>
+		<filed name="HouseAddress1" type="String" style="Text" defaultValue="" length="32" require="Y" describe="房产地址详细"/>
+		<filed name="Car" type="String" style="Text" defaultValue="" length="32" require="Y" describe="车辆"/>
+		<filed name="CarNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="车牌号"/>
+		<filed name="MaritalStatus" type="String" style="Text" defaultValue="" length="32" require="Y" describe="婚姻状况"/>
+		<filed name="SpouseName" type="String" style="Text" defaultValue="" length="32" require="Y" describe="配偶姓名"/>
+		<filed name="SpouseCertid" type="String" style="Text" defaultValue="" length="32" require="Y" describe="配偶身份证号"/>
+		<filed name="SpousePhoneNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="配偶手机号"/>
+		<filed name="SpouseLiveAddress" type="String" style="Text" defaultValue="" length="32" require="Y" describe="配偶现居住地址"/>
+		<filed name="SpouseCompanyName" type="String" style="Text" defaultValue="" length="32" require="Y" describe="配偶单位名称"/>
+		<filed name="SpouseCompanyPhone" type="String" style="Text" defaultValue="" length="32" require="Y" describe="配偶单位电话"/>
+		<filed name="SupportStatus" type="String" style="Text" defaultValue="" length="32" require="Y" describe="供养状况"/>
+		<filed name="ChildCount" type="String" style="Text" defaultValue="" length="32" require="Y" describe="子女数目"/>
+		<filed name="Name1" type="String" style="Text" defaultValue="" length="32" require="Y" describe="子女姓名"/>
+		<filed name="PhoneNo1" type="String" style="Text" defaultValue="" length="32" require="Y" describe="子女手机号码"/>
+		<filed name="FamilyMemberName" type="String" style="Text" defaultValue="" length="32" require="Y" describe="家庭成员姓名"/>
+		<filed name="RelationShip" type="String" style="Text" defaultValue="" length="32" require="Y" describe="与申请人关系"/>
+		<filed name="OtherName" type="String" style="Text" defaultValue="" length="32" require="Y" describe="其他联系人姓名"/>
+		<filed name="OtherRelative" type="String" style="Text" defaultValue="" length="32" require="Y" describe="与申请人关系"/>
+		<filed name="OtherPhoeNo" type="String" style="Text" defaultValue="" length="32" require="Y" describe="其他联系人手机号码"/>
+		<filed name="Rate" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="利率"/>
+		<filed name="ARate" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="A利率"/>
+		<filed name="BRate" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="B利率"/>
+		<filed name="CRate" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="C利率"/>
+		<filed name="Insurance" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="保险费"/>
+		<filed name="DRate" type="Double" style="Text" defaultValue="" length="32" require="Y" describe="月风险准备金率"/>
+	</tran>
+	<tran id="responseBA001" describe="贷款申请"></tran>
+</trans>
+
+
